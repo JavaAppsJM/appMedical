@@ -23,7 +23,11 @@ public class CookieRepository {
     }
 
     public String getCookieValueFromLabel(String label){
-        return cookieList.get(bestaatCookie(label)).getCookieValue();
+        if (bestaatCookie(label) != COOKIE_NOT_FOUND){
+            return cookieList.get(bestaatCookie(label)).getCookieValue();
+        }else {
+            return null;
+        }
     }
 
     public List<Cookie> getCookieList() {

@@ -56,9 +56,6 @@ public class DatePickerFragment extends DialogFragment implements DatePickerDial
     @NonNull
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState){
-        // bepalen meegegeven bundle arguments
-        Bundle parmBundle = getArguments();
-        String caller = (String) parmBundle.get("Caller");
         // Use the current date as the default date in the picker.
         final Calendar c = Calendar.getInstance();
         int year = c.get(Calendar.YEAR);

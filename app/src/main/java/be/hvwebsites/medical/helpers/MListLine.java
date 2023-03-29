@@ -35,22 +35,6 @@ public class MListLine {
         }
     }
 
-    public void fillListLineWBelly(Measurement belly){
-        mDate = belly.getMeasurementDate();
-        mValue1 = belly.getMeasurementValue();
-        mType = GlobalConstant.CASE_BELLY;
-    }
-
-    public void fillListLineWBlood(Measurement upperP,
-                                   Measurement lowerP,
-                                   Measurement heartbeatP){
-        mDate = upperP.getMeasurementDate();
-        mValue2 = upperP.getMeasurementValue();
-        mValue3 = lowerP.getMeasurementValue();
-        mValue4 = heartbeatP.getMeasurementValue();
-        mType = GlobalConstant.CASE_BLOOD;
-    }
-
     public Measurement findCorM(List<Measurement> measurementList){
         Measurement fMeasurement = new Measurement();
         for (int i = 0; i < measurementList.size(); i++) {
@@ -115,4 +99,21 @@ public class MListLine {
     public void setmValue4(float mValue4) {
         this.mValue4 = mValue4;
     }
+
+    public void fillListLineWBelly(Measurement belly){
+        mDate = belly.getMeasurementDate();
+        mValue1 = belly.getMeasurementValue();
+        mType = GlobalConstant.CASE_BELLY;
+    }
+
+    public void fillListLineWBlood(Measurement upperP,
+                                   Measurement lowerP,
+                                   Measurement heartbeatP){
+        mDate = upperP.getMeasurementDate();
+        mValue2 = upperP.getMeasurementValue();
+        mValue3 = lowerP.getMeasurementValue();
+        mValue4 = heartbeatP.getMeasurementValue();
+        mType = GlobalConstant.CASE_BLOOD;
+    }
+
 }

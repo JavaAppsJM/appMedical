@@ -7,8 +7,6 @@ public class FileBaseService {
     private String fileBaseDir;
     private static final String FILE_BASE_INTERNAL = "base_internal";
     private static final String FILE_BASE_EXTERNAL = "base_external";
-    // "/storage/emulated/0/Android/data/be.hvwebsites.shopping/files"
-    // "/data/user/0/be.hvwebsites.shopping/files"
 
     public FileBaseService(String deviceModel, String packageNm) {
         this.deviceModel = deviceModel;

@@ -116,7 +116,7 @@ public class SendEmailActivity extends AppCompatActivity implements NewDatePicke
                     cookieRepository.addCookie(new Cookie(EMAIL_ADRES_KEY, emailadresStr));
 
                     // De gegevens worden in een mail verwerkt
-                    String[] emailAdresses = new String[0];
+                    String[] emailAdresses = new String[1];
                     emailAdresses[0] = emailadresStr;
                     String emailSubject = EMAIL_ADRES_SUBJECT + new DateString(minimumDateStr).getFormatDate();
                     String emailBody = measurementViewModel.getMeasurementsForEmail(minimumDateStr, alreadySent);
