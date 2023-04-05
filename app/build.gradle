@@ -26,9 +26,18 @@ android {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
     }
+
 }
 
+
 dependencies {
+
+/*
+    compile files('libs/activation.jar')
+    compile files('libs/additional.jar')
+    compile files('libs/mail.jar')
+*/
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
 
     def fragment_version = "1.3.6"
 

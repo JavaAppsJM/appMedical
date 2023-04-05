@@ -22,6 +22,10 @@ import be.hvwebsites.medical.fragments.DatePickerFragment;
 import be.hvwebsites.medical.helpers.DateString;
 import be.hvwebsites.medical.helpers.ReturnInfo;
 import be.hvwebsites.medical.interfaces.NewDatePickerInterface;
+import be.hvwebsites.medical.mailing.MailSender;
+import be.hvwebsites.medical.mailing.model.Attachment;
+import be.hvwebsites.medical.mailing.model.Mail;
+import be.hvwebsites.medical.mailing.model.Recipient;
 import be.hvwebsites.medical.repositories.Cookie;
 import be.hvwebsites.medical.repositories.CookieRepository;
 import be.hvwebsites.medical.services.FileBaseService;
@@ -41,7 +45,8 @@ public class SendEmailActivity extends AppCompatActivity implements NewDatePicke
 
     // Constants
     private static final String EMAIL_ADRES_KEY = "emailadres";
-    private static final String EMAIL_ADRES_DEFAULT = "mj842580@gmail.com";
+    private static final String EMAIL_ADRES_SENDER = "jstes0089@gmail.com";
+    private static final String EMAIL_ADRES_RECIPIENT = "mj842580@gmail.com";
     private static final String EMAIL_ADRES_SUBJECT = "Bloeddrukmetingen vanaf ";
 
     @Override
@@ -85,7 +90,7 @@ public class SendEmailActivity extends AppCompatActivity implements NewDatePicke
         CookieRepository cookieRepository = new CookieRepository(baseDir);
         emailadresStr = cookieRepository.getCookieValueFromLabel(EMAIL_ADRES_KEY);
         if (emailadresStr == null){
-            emailadresStr = EMAIL_ADRES_DEFAULT;
+            emailadresStr = EMAIL_ADRES_RECIPIENT;
         }
 
         // emailadres op scherm invullen
@@ -120,7 +125,33 @@ public class SendEmailActivity extends AppCompatActivity implements NewDatePicke
                     emailAdresses[0] = emailadresStr;
                     String emailSubject = EMAIL_ADRES_SUBJECT + new DateString(minimumDateStr).getFormatDate();
                     String emailBody = measurementViewModel.getMeasurementsForEmail(minimumDateStr, alreadySent);
-                    composeEmail(emailAdresses, emailSubject, emailBody);
+
+                    // Send email directly via solution AndroidMail on github
+                    MailSender mailSender = new MailSender(emailadresStr, "Radio_ook0089");
+
+                    Mail.MailBuilder builder = new Mail.MailBuilder();
+                    Mail mail = builder
+                            .setSender(EMAIL_ADRES_SENDER)
+                            .addRecipient(new Recipient(emailadresStr))
+                            .setText(emailBody)
+                            .setSubject(emailSubject)
+                            .setHtml("<h1 style=\"color:red;\">Ciao</h1>")
+                            .addAttachment(new Attachment(baseDir, MeasurementViewModel.UPPER_BLOOD_PRESSURE_FILE))
+                            .build();
+
+                    mailSender.sendMail(mail, new MailSender.OnMailSentListener() {
+                        @Override
+                        public void onSuccess() {
+                            System.out.println();
+                        }
+                        @Override
+                        public void onError(Exception error) {
+                            System.out.println();
+                        }
+                    });
+
+                // Send email via Intent
+                    //sendEmailWithIntent(emailAdresses, emailSubject, emailBody);
 
                     // Ga terug nr MainActivity
                     startActivity(replyIntent);
@@ -129,8 +160,8 @@ public class SendEmailActivity extends AppCompatActivity implements NewDatePicke
         });
     }
 
-    public void composeEmail(String[] addresses, String subject, String body) {
-        Intent intent = new Intent(Intent.ACTION_SEND);
+    public void sendEmailWithIntent(String[] addresses, String subject, String body) {
+        Intent intent = new Intent(Intent.ACTION_SENDTO);
         intent.setType("*/*");
         intent.setData(Uri.parse("mailto:")); // only email apps should handle this
         intent.putExtra(Intent.EXTRA_EMAIL, addresses);
