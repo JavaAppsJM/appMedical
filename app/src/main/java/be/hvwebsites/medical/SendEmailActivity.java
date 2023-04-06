@@ -113,9 +113,6 @@ public class SendEmailActivity extends AppCompatActivity implements NewDatePicke
                     minimumDateStr = minimumDateView.getText().toString();
                     emailadresStr = emailAdresView.getText().toString();
                     alreadySent = alreadySentView.isChecked();
-                    Toast.makeText(SendEmailActivity.this,
-                            "Metingen verstuurd !",
-                            Toast.LENGTH_LONG).show();
 
                     // emailadres bewaren in cookie
                     cookieRepository.addCookie(new Cookie(EMAIL_ADRES_KEY, emailadresStr));
@@ -127,7 +124,7 @@ public class SendEmailActivity extends AppCompatActivity implements NewDatePicke
                     String emailBody = measurementViewModel.getMeasurementsForEmail(minimumDateStr, alreadySent);
 
                     // Send email directly via solution AndroidMail on github
-                    MailSender mailSender = new MailSender(emailadresStr, "Radio_ook0089");
+                    MailSender mailSender = new MailSender(EMAIL_ADRES_SENDER, "Radio_ook0089");
 
                     Mail.MailBuilder builder = new Mail.MailBuilder();
                     Mail mail = builder
@@ -135,18 +132,24 @@ public class SendEmailActivity extends AppCompatActivity implements NewDatePicke
                             .addRecipient(new Recipient(emailadresStr))
                             .setText(emailBody)
                             .setSubject(emailSubject)
-                            .setHtml("<h1 style=\"color:red;\">Ciao</h1>")
-                            .addAttachment(new Attachment(baseDir, MeasurementViewModel.UPPER_BLOOD_PRESSURE_FILE))
+                            //.setHtml("<h1 style=\"color:red;\">Ciao</h1>")
+                            //.addAttachment(new Attachment(baseDir, MeasurementViewModel.UPPER_BLOOD_PRESSURE_FILE))
                             .build();
 
                     mailSender.sendMail(mail, new MailSender.OnMailSentListener() {
                         @Override
                         public void onSuccess() {
                             System.out.println();
+                            Toast.makeText(SendEmailActivity.this,
+                                    "Metingen verstuurd !",
+                                    Toast.LENGTH_LONG).show();
                         }
                         @Override
                         public void onError(Exception error) {
                             System.out.println();
+                            Toast.makeText(SendEmailActivity.this,
+                                    "Fout bij versturen email: " + error.toString(),
+                                    Toast.LENGTH_LONG).show();
                         }
                     });
 

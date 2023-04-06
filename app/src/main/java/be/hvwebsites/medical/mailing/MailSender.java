@@ -5,20 +5,15 @@ import android.util.Log;
 
 import java.security.Security;
 
-import javax.activation.DataHandler;
-import javax.activation.DataSource;
-import javax.activation.FileDataSource;
 import javax.mail.Message;
 import javax.mail.Multipart;
 import javax.mail.PasswordAuthentication;
 import javax.mail.Session;
 import javax.mail.Transport;
 import javax.mail.internet.InternetAddress;
-import javax.mail.internet.MimeBodyPart;
 import javax.mail.internet.MimeMessage;
 import javax.mail.internet.MimeMultipart;
 
-import be.hvwebsites.medical.mailing.model.Attachment;
 import be.hvwebsites.medical.mailing.model.Mail;
 import be.hvwebsites.medical.mailing.model.Recipient;
 import be.hvwebsites.medical.mailing.provider.GmailProvider;
@@ -110,7 +105,6 @@ public class MailSender extends javax.mail.Authenticator{
                     htmlBodyPart.setDataHandler(handler);
                     multipart.addBodyPart(htmlBodyPart);
                 }
-*/
 
                 if(!mail.getAttachments().isEmpty()) {
                     for(Attachment attachment : mail.getAttachments()) {
@@ -121,6 +115,7 @@ public class MailSender extends javax.mail.Authenticator{
                         multipart.addBodyPart(attachmentBodyPart);
                     }
                 }
+*/
 
 
                 message.setContent(mail.getText(), "text/plain");
