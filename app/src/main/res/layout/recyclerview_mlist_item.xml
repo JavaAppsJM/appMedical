@@ -11,7 +11,8 @@
         android:id="@+id/mListRecycler"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="24dp"
+        android:layout_marginStart="0dp"
+        android:layout_marginLeft="0dp"
         app:layout_constraintStart_toStartOf="parent"
         tools:text="placeholder text" />
 

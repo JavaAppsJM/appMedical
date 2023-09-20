@@ -26,10 +26,29 @@ public class MeasurementRepository {
         return measurementList;
     }
 
+    private boolean createDir(File inFile){
+        // Aanmaken directory
+        File directory = new File(inFile.getParent());
+        if (!directory.exists()){
+            // directory bestaat niet, aanamken
+            return directory.mkdir();
+        }else {
+            // directory bestaat al
+            return true;
+        }
+    }
+
     public ReturnInfo initializeRepository(File mFile){
         // Initialize latestMeasurement en measurementList
         latestMeasurement = new Measurement();
         measurementList.clear();
+
+        // Bestaat file, aanmaken directory indien niet bestaat
+        if (!mFile.exists()){
+            boolean dirCreated = createDir(mFile);
+        }
+
+        // File lezen
         ReturnInfo metingToestand = fileNrMeasurementList(mFile);
         if (metingToestand.getReturnCode() == 0){
             // Metingfile lezen is gelukt en metingen zitten in List
@@ -51,7 +70,7 @@ public class MeasurementRepository {
         return metingToestand;
     }
 
-    public ReturnInfo fileNrMeasurementList(File metingFile){
+    private ReturnInfo fileNrMeasurementList(File metingFile){
         ReturnInfo returnInfo = new ReturnInfo(0, "");
         // Meting File lezen
         if (metingFile.exists()){
@@ -74,6 +93,8 @@ public class MeasurementRepository {
                 return returnInfo;
             }
         }else {
+            // Bestaat de directory ?
+
             // Returninfo invullen
             returnInfo.setReturnCode(100);
             returnInfo.setReturnMessage("Er zijn nog geen metingen !");
@@ -82,6 +103,11 @@ public class MeasurementRepository {
     }
 
     public boolean storeMeasurements(File metingFile, List<Measurement> measurementList){
+        // Bestaat file, aanmaken directory indien niet bestaat
+        if (!metingFile.exists()){
+            boolean dirCreated = createDir(metingFile);
+        }
+
         // Sorteren
         List<Measurement> sortedMeasurements = sortMeasurements(measurementList);
 

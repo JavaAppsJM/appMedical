@@ -3,6 +3,7 @@ package be.hvwebsites.medical;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.ViewModelProvider;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
@@ -33,7 +34,9 @@ public class MainActivity extends AppCompatActivity {
         TextView latestMeasurementsView = findViewById(R.id.resumeinfo);
 
         // Creer een filebase service (bevat file base en file base directory) obv device en package name
-        FileBaseService fileBaseService = new FileBaseService(deviceModel, getPackageName());
+        // TODO: Find a way to get filepath !!
+        FileBaseService fileBaseService = new FileBaseService(deviceModel, getPackageName()
+                , getFilesDir().getPath());
 
         // Basis directory definitie
         String baseDir = fileBaseService.getFileBaseDir();
