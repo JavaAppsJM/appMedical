@@ -58,7 +58,10 @@ public class MListActivity extends AppCompatActivity {
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
         // Creer een filebase service (bevat file base en file base directory) obv device en package name
-        FileBaseService fileBaseService = new FileBaseService(deviceModel, getPackageName(), getFilesDir().getPath());
+        FileBaseService fileBaseService = new FileBaseService(deviceModel
+                , this
+                , getPackageName()
+                , getFilesDir().getPath());
 
         // Basis directory definitie
         String baseDir = fileBaseService.getFileBaseDir();

@@ -33,9 +33,10 @@ public class MainActivity extends AppCompatActivity {
 
         TextView latestMeasurementsView = findViewById(R.id.resumeinfo);
 
-        // Creer een filebase service (bevat file base en file base directory) obv device en package name
-        // TODO: Find a way to get filepath !!
-        FileBaseService fileBaseService = new FileBaseService(deviceModel, getPackageName()
+        // Creer een filebase service bepaalt file base directory obv device en context
+        FileBaseService fileBaseService = new FileBaseService(deviceModel
+                , this
+                , getPackageName()
                 , getFilesDir().getPath());
 
         // Basis directory definitie

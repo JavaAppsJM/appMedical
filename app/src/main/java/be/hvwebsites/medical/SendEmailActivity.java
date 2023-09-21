@@ -61,7 +61,10 @@ public class SendEmailActivity extends AppCompatActivity implements NewDatePicke
 
         // Ophalen metingen
         // Creer een filebase service (bevat file base en file base directory) obv device en package name
-        FileBaseService fileBaseService = new FileBaseService(deviceModel, getPackageName(), getFilesDir().getPath());
+        FileBaseService fileBaseService = new FileBaseService(deviceModel
+                , this
+                , getPackageName()
+                , getFilesDir().getPath());
 
         // Basis directory definitie
         String baseDir = fileBaseService.getFileBaseDir();

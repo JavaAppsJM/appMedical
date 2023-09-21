@@ -5,19 +5,27 @@ import android.content.Context;
 import java.net.ContentHandler;
 
 public class FileBaseService {
-    private final String packName;
     private String fileBaseDir;
     private static final String FILE_BASE_INTERNAL = "base_internal";
     private static final String FILE_BASE_EXTERNAL = "base_external";
 
-    public FileBaseService(String deviceModel, String packageNm, String path) {
-        this.packName = packageNm;
-        this.fileBaseDir = path;
-        //this.fileBaseDir = path + packName + "/files";
+    public FileBaseService(String deviceModel, Context inContext, String packageNm, String path) {
+        // packageNm en path zijn overbodig geworden !!
+
+        // Bepaal filepath
+        if (deviceModel.equals("GT-I9100")){
+            // Internal files
+            this.fileBaseDir = inContext.getFilesDir().getPath();
+        }else {
+            // External files
+            this.fileBaseDir = inContext.getExternalFilesDir(null).getAbsolutePath();
+        }
 
         boolean debug = true;
-
 /*
+        //this.fileBaseDir = path + packName + "/files";
+        //this.fileBaseDir = path;
+
         if (deviceModel.equals("GT-I9100")){
             setFileBaseDir(FILE_BASE_INTERNAL, path);
 //            fileBase = FILE_BASE_INTERNAL;
